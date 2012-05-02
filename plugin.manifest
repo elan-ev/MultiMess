@@ -3,8 +3,4 @@ pluginclassname=MultiMess
 origin=elan-ev
 version=2.0
 studipMinVersion=2.0
-<<<<<<< HEAD
 studipMaxVersion=2.2
-=======
-
->>>>>>> master
