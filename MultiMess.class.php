@@ -32,28 +32,13 @@ class MultiMess extends StudipPlugin implements SystemPlugin
             $main = new Navigation(_("Massennachrichten"));
 
             $main->setURL(PluginEngine::getURL('multimess/admin/index'));
-    
-            /*
-            $config = new Navigation('OC Einstellungen');
-            $config->setURL(PluginEngine::getURL('opencast/admin/config'));
-            $main->addSubNavigation('oc-config', $config);
-            */
-            
             Navigation::addItem('/start/multimess', $main);
-            //Navigation::addItem('/admin/config/oc-config', $config);
-            
-        }
-        /*
-         $style_attributes = array(
-            'rel'   => 'stylesheet',
-            'href'  => $GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP'] . $this->getPluginPath() . '/stylesheets/oc.css');
-         PageLayout::addHeadElement('link',  array_merge($style_attributes, array()));
 
-         $script_attributes = array(
-            'src'   => $GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP'] . $this->getPluginPath() . '/javascripts/application.js');
-         PageLayout::addHeadElement('script', $script_attributes, '');
-         */
-   
+        }
+        $style_attributes = array(
+            'rel'   => 'stylesheet',
+            'href'  => $GLOBALS['CANONICAL_RELATIVE_PATH_STUDIP'] . $this->getPluginPath() . '/stylesheets/multimess.css');
+        PageLayout::addHeadElement('link',  array_merge($style_attributes, array()));
     }    
 
     /**

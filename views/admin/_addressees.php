@@ -11,7 +11,7 @@
 
 <div style="margin: 0 10px;">
     <table width="100%" cellspacing="0" cellpadding="2" border="0">
-        <? foreach($cand_addresses as $addr) : ?>
+        <? foreach($cand_addressees as $addr) : ?>
         <tr class="<?= TextHelper::cycle('steel1', 'steelgraulight') ?>">
             <td align="center">
                 <input name="addressees[]" type="checkbox" value="<?=$addr['user_id']?>" checked="checked">

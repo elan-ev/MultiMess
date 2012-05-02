@@ -33,7 +33,8 @@ $infobox_content = array(array(
     'kategorie' => _('Hinweise:'),
     'eintrag'   => array(array(
         'icon' => 'icons/16/black/info.png',
-        'text' => _('Dies ist das Demo-Plugin.')
+        'text' => _('Sie können hier eine Nachricht verfassen. Falls Sie die Empfänger überprüfen und bearbeiten wollen,'
+                 . ' klicken Sie auf die entsprechende Feldüberschrift. Einen alternativen Absender können Sie bei Bedarfs auch bestimmen.')
     ))
 ));
 $infobox = array('picture' => 'infobox/messages.jpg', 'content' => $infobox_content);
@@ -45,14 +46,14 @@ $infobox = array('picture' => 'infobox/messages.jpg', 'content' => $infobox_cont
 <div id="compose-accordion">
     <h3><?=_("Empfänger")?></h3>
     <div class="admin-accordion-content">
-        <? if (count($cand_addresses) > 0) : ?>
-        <?=$this->render_partial("admin/_addressees", array('cand_addresses' => $cand_addresses));?>
+        <? if (count($cand_addressees) > 0) : ?>
+        <?=$this->render_partial("admin/_addressees", array('cand_addressees' => $cand_addressees));?>
         <? endif; ?>
      </div>
     <h3><?=_("Absender")?></h3>
     <div class="admin-accordion-content">
         <div align="center">
-            <? if(!isset($flash['cand_addresser'])) :?>
+            <? if(!$flash['cand_addresser']) :?>
                 <input type="text" name="addresser" value="" style="width: 95%">
                 <input name="addresser_search" type="image" src="<?=Assets::image_path('icons/16/blue/search.png')?>">
             <? else : ?>
