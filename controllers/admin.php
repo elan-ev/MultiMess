@@ -140,6 +140,7 @@ class AdminController extends AuthenticatedController
         $addressees = Request::getArray('addressees');
         if(empty($addressees)) {
             $this->flash['messages'] = array('info' => _("Sie haben keine(n) Empfänger angegeben."));
+            $this->redirect(PluginEngine::getLink('multimess/admin/index'));
         } else {
             $query = "SELECT * FROM auth_user_md5 aum WHERE user_id IN( ? )";
             $values = array($addressees);
@@ -167,19 +168,20 @@ class AdminController extends AuthenticatedController
                 if(Request::get('addresser')) {
                     $addresser = Request::get('addresser');
                 } else {
-                    $addresser = '____%system%____';
+                    $addresser = "____%system%____";
                 }
 
                 $bm = new MultiMessBulkMail();
                 foreach($this->flash['cand_addressees'] as $addressee) {
+
                     $id = md5(uniqid("rockandroll"));
-                    $bm->insert_message($message,$addressee['user_id'], $addresser,'','', 1,'', $subject, false);
-                    $bm->sendingEmail($addressee['user_id'], $addresser, $message, $subject);
+                    $bm->sendingEmail($addressee['user_id'], $addresser, $message, $subject,$id);
                 }
                 $bm->bulkSend();
                 $this->flash['messages'] = array('success' => sprintf(_("Es wurde eine Nachricht an %s Empfänger geschickt."), sizeof($this->flash['cand_addressees'])));
+                $this->redirect(PluginEngine::getLink('multimess/admin/index'));
             }
         }
-        $this->redirect(PluginEngine::getLink('multimess/admin/index'));
+
     }
 }
