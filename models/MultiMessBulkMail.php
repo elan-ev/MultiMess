@@ -31,12 +31,6 @@ class MultiMessBulkMail extends Messaging
 
         setTempLanguage($db4->f("user_id"));
 
-<<<<<<< HEAD
-        self::insert_message($message, get_username($rec_user_id), $snd_user_id, time(), $message_id, '','',$subject,FALSE,'');
-=======
-
->>>>>>> master
-
         if (empty($this->bulk_mail[md5($message)][getenv('LANG')])) {
 
             $title = "[Stud.IP - " . $GLOBALS['UNI_NAME_CLEAN'] . "] ".stripslashes(kill_format(str_replace(array("\r","\n"), '', $subject)));
