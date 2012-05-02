@@ -28,15 +28,15 @@
         static function adresser_search($cand_addresser) {
             $pdo = DBManager::get();
             $searchstring = $pdo->quote('%' . $cand_addresser . '%');
-            $stmt = $pdo->query("SELECT *"
-                . " FROM auth_user_md5"
+            $stmt = $pdo->query("SELECT aum.*"
+                . " FROM auth_user_md5 aum"
                 . " LEFT JOIN user_info USING (user_id)"
                 . " WHERE perms NOT IN('root', 'admin')"
                 . " AND (username LIKE $searchstring OR Vorname LIKE $searchstring"
                 . " OR Nachname LIKE $searchstring)"
                 . " LIMIT 500");
 
-            while ($data = $stmt->fetch()) {
+            while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $results[$data['username']] = $data;
             }
 
