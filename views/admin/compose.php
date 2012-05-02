@@ -72,7 +72,14 @@ $infobox = array('picture' => 'infobox/messages.jpg', 'content' => $infobox_cont
     </div>
 </div>
 <div class="form_submit">
+<<<<<<< HEAD
     <?= makeButton('absenden','input') ?>
     <a href="<?=PluginEngine::getLink('multimess/admin/index')?>"> <?=  makeButton('abbrechen', 'img') ?></a>
+=======
+    <div class="button-group">
+        <?= \Studip\LinkButton::createCancel(_('Abbrechen'), PluginEngine::getLink('multimess/admin/')) ?>
+        <?= \Studip\Button::create(_('Absenden'), 'absenden') ?>
+    </div>
+>>>>>>> master
 </div>
 </form>

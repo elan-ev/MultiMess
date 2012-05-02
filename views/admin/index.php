@@ -60,7 +60,14 @@ $infobox = array('picture' => 'infobox/messages.jpg', 'content' => $infobox_cont
     </div>
     <br>
     <div class="form_submit">
+<<<<<<< HEAD
         <?= makeButton('suchen','input') ?>
         <?//= LinkButton::createCancel(_('Abbrechen'), PluginEngine::getLink('opencast/admin/config/')) ?>
+=======
+        <!-- <div class="button-group"> -->
+            <?//= \Studip\LinkButton::createCancel(_('Abbrechen'), PluginEngine::getLink('multimess/admin/')) ?>
+            <?= \Studip\Button::create(_('Suchen'), 'suchen') ?>
+        <!-- </div> -->
+>>>>>>> master
     </div>
 </form> 
