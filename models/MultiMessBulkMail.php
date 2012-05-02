@@ -23,13 +23,15 @@ class MultiMessBulkMail extends Messaging
     function sendingEmail($rec_user_id, $snd_user_id, $message, $subject, $message_id)
     {
         global $user;
-
+        $db3 = new DB_Seminar;
         $db4 = new DB_Seminar("SELECT user_id, Email FROM auth_user_md5 WHERE user_id = '$rec_user_id';");
         $db4->next_record();
         $to = $db4->f("Email");
         $rec_fullname = 'Sie';
 
         setTempLanguage($db4->f("user_id"));
+
+        self::insert_message($message, get_username($rec_user_id), $snd_user_id, time(), $message_id, '','',$subject,FALSE,'');
 
         if (empty($this->bulk_mail[md5($message)][getenv('LANG')])) {
 
