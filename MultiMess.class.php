@@ -32,7 +32,7 @@ class MultiMess extends StudipPlugin implements SystemPlugin
             $main = new Navigation(_("Massennachrichten"));
 
             $main->setURL(PluginEngine::getURL('multimess/admin/index'));
-            Navigation::addItem('/start/multimess', $main);
+            Navigation::addItem('/messaging/multimess', $main);
 
         }
         $style_attributes = array(

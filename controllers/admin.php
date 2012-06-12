@@ -31,6 +31,7 @@ class AdminController extends AuthenticatedController
             // set default layout
             $layout = $GLOBALS['template_factory']->open('layouts/base');
             $this->set_layout($layout);
+            Navigation::activateItem('/messaging/multimess');
     }
     
     /**

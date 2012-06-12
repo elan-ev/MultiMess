@@ -16,15 +16,15 @@ $infobox_content = array(array(
     'kategorie' => _('Hinweise:'),
     'eintrag'   => array(array(
         'icon' => 'icons/16/black/info.png',
-        'text' => _('Geben sie eine Liste von Nutzernamen (username) ein, an die eine Nachricht verschickt werden soll. Die Namen können'
-        . 'mit Komma, Semikolon, oder whitespaces getrennt sein.Alternativ k&ouml;nnen Sie sich auch hier (zusätzlich) eine'
+        'text' => _('Geben sie eine Liste von Nutzernamen (username) ein, an die eine Nachricht verschickt werden soll. Die Namen können '
+        . 'mit Komma, Semikolon, oder whitespaces getrennt sein. Alternativ k&ouml;nnen Sie sich auch hier (zusätzlich) eine'
         . ' bestimmte Rechtegruppe auswählen, an die eine Nachricht verschickt werden soll, sowie Empfänger anhand einer bestimmten Studieninformation.')
     ))
 ));
 
 $infobox = array('picture' => 'infobox/messages.jpg', 'content' => $infobox_content);
 ?>
-<h1><?=_("Massenachrichten")?></h1>
+<h1><?=_("Massennachrichten")?></h1>
 <p>
 
 </p>

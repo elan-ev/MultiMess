@@ -13,17 +13,23 @@
 
 <script language="JavaScript">
     jQuery(document).ready(function () {
+        jQuery('#dialog').hide();
         var strHref = window.location.href;
         if (strHref.indexOf("addresser") == -1) {
             jQuery('#compose-accordion').accordion({
+                autoHeight: false,
                 active: 2
             });
         } else {
             jQuery('#compose-accordion').accordion({
+                autoHeight: false,
                 active: 1
             });
         }
         jQuery('#layout_content').css('overflow', 'hidden');
+        jQuery('#addressee_lookup').bind('click', function() {
+            jQuery('#dialog').dialog();
+        }).css('cursor','pointer');
     });
 </script>
 
@@ -41,11 +47,18 @@ $infobox = array('picture' => 'infobox/messages.jpg', 'content' => $infobox_cont
 
 ?>
 
+<div id="dialog" title="<?=_('Empfängerliste')?>">
+    <?=$this->render_partial("admin/_addressee_lookup");?>
+</div>
+
+
+
 <h1><?=_("Massenachrichten")?></h1>
 <form action="<?= PluginEngine::getLink('multimess/admin/send/') ?>" method=post>
 <div id="compose-accordion">
     <h3><?=_("Empfänger")?></h3>
     <div class="admin-accordion-content">
+        <?//=Assets::img('icons/16/blue/edit.png', array('id'=> 'addressee_lookup'))?>
         <? if (count($cand_addressees) > 0) : ?>
         <?=$this->render_partial("admin/_addressees", array('cand_addressees' => $cand_addressees));?>
         <? endif; ?>
