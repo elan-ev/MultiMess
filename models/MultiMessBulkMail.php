@@ -76,7 +76,6 @@ class MultiMessBulkMail extends Messaging
         // if nothing to do, return
         if (empty($this->bulk_mail)) return;
 
-
         // send a mail, for each language
         foreach ($this->bulk_mail as $lang_data) {
             foreach ($lang_data as $data) {

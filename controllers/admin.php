@@ -76,7 +76,7 @@ class AdminController extends AuthenticatedController
             // (3) check for active lecturers
             if(Request::submitted('dozent_aktiv')) {
                 $query = "SELECT * FROM auth_user_md5 aum LEFT JOIN  seminar_user AS su USING (user_id)"
-                    . " LEFT JOIN seminare AS s USING ( Seminar_id ) WHERE s.start_time IN (?,?) AND su.status='dozent'";
+                    . " LEFT JOIN seminare AS s USING ( Seminar_id ) WHERE s.start_time IN (?,?) AND su.status='dozent' AND aum.perms = 'dozent'";
                 $values = array($this_sem['beginn'], $next_sem['beginn']);
                 $this->cand_addressees = MultiMessModel::adressee_search($query, $values, $locked, $this->cand_addressees);
             }
@@ -168,13 +168,16 @@ class AdminController extends AuthenticatedController
 
                 if(Request::get('addresser')) {
                     $addresser = Request::get('addresser');
+
                 } else {
                     $addresser = "____%system%____";
                 }
 
-                $bm = new MultiMessBulkMail();
+                //$bm = new MultiMessBulkMail();
+                $bm = new Messaging();
                 foreach($this->flash['cand_addressees'] as $addressee) {
-                    $bm->insert_message($message, $addressee['username'], $addresser, time(), '', '','',$subject);
+                    $bm->insert_message(addslashes($message), $addressee['username'], $addresser, time(), '', '','',$subject,TRUE);
+
                 }
                 $this->flash['messages'] = array('success' => sprintf(_("Es wurde eine Nachricht an %s Empfänger geschickt."), sizeof($this->flash['cand_addressees'])));
                 $this->redirect(PluginEngine::getLink('multimess/admin/index'));
