@@ -87,7 +87,7 @@ class AdminController extends AuthenticatedController
                     $lookup->setFilter('fach',$sg);
                     $sg_users[] = $lookup->execute();
                 }
-                if(is_array($sg_users)) {
+                if(is_array($sg_users) && !empty($sg_users[0])) {
                     foreach($sg_users as $user) {
                         $query = "SELECT * FROM auth_user_md5 aum WHERE user_id IN( ? )";
                         $values = array($user);
