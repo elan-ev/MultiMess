@@ -34,7 +34,7 @@ $infobox = array('picture' => 'infobox/messages.jpg', 'content' => $infobox_cont
     </label></br></br></br>
     <div style="clear:both" align="center">
         <div style="float:left;width:45%;">
-            <textarea id="cand_addressee" name="cand_addressee" rows="15" cols="40" wrap="virtual"><?=(is_array($addressee_list) ? join("\n", array_keys($addressee_list)): '')?></textarea>
+            <textarea id="cand_addressee" name="cand_addressee" rows="20" cols="40" wrap="virtual"><?=(is_array($addressee_list) ? join("\n", array_keys($addressee_list)): '')?></textarea>
         </div>
         <div align="left">
             <input type="checkbox" name="perms[]" value="admin"> Administratoren<br>
@@ -43,14 +43,23 @@ $infobox = array('picture' => 'infobox/messages.jpg', 'content' => $infobox_cont
             <input type="checkbox" name="perms[]" value="tutor"> Tutoren<br>
             <br>
             <div>
-                <span style="vertical-align:top;padding-right:15px;">Studiengang</span>
+                <span style="vertical-align:top;padding-right:15px;">Studiengang:</span>
                 <select name="studiengang[]" size="5" multiple>
                     <? foreach($studycourses as $sg) : ?>
                     <option value="<?=$sg['studiengang_id']?>"><?=$sg['name']?></option>
                     <? endforeach ?>
                 </select>
+                <br><br>
+                <span style="vertical-align:top;padding-right:15px;">Abschluss:</span><br>
+                <select name="abschluss[]" size="5" multiple>
+                    <? foreach($studydegrees as $abs) : ?>
+                    <option value="<?=$abs['abschluss_id']?>"><?=$abs['name']?></option>
+                    <? endforeach ?>
+                </select>
+                
+                
             </div>
-            <br>
+            <!-- ><br>
             Empfänger anhand bestimmter Studieninfos hinzufügen:<br>
             <input type="text" name="datafield"  size="40" value=""><br><br>
             <input type="checkbox" name="locked" value="TRUE"> nur an nicht gesperrte Nutzer<br>

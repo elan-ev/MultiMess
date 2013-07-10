@@ -44,6 +44,7 @@ class AdminController extends AuthenticatedController
         }
 
         $this->studycourses = StudycourseModel::getStudyCourses();
+        $this->studydegrees = StudycourseModel::getStudyDegrees();
 
 
     }
@@ -82,27 +83,48 @@ class AdminController extends AuthenticatedController
             }
             // (4) check studiengang
             if($cand_sg = Request::getArray('studiengang')) {
-                foreach($cand_sg as $sg) {
-                    $lookup = new UserLookup;
-                    $lookup->setFilter('fach',$sg);
-                    $sg_users[] = $lookup->execute();
-                }
+
+                $lookup = new UserLookup;
+                $lookup->setFilter('fach',$cand_sg);
+                $sg_users[] = $lookup->execute();
+              
                 if(is_array($sg_users) && !empty($sg_users[0])) {
                     foreach($sg_users as $user) {
                         $query = "SELECT * FROM auth_user_md5 aum WHERE user_id IN( ? )";
                         $values = array($user);
-                        $this->cand_addressees = MultiMessModel::adressee_search($query, $values, $locked, $this->cv);
+                        $this->cand_addressees = MultiMessModel::adressee_search($query, $values, $locked, $this->cand_addressees);
                     }
                 }
             }
-            // (5)...
-            if($study_info = Request::get('datafield')) {
-                $study_info = sprintf('%%%s%%',implode('%',explode(' ',$study_info)));
-                $query = "SELECT * FROM auth_user_md5 AS aum LEFT JOIN datafields_entries AS de ON ( aum.user_id = de.range_id )"
-                       . "LEFT JOIN datafields AS df USING ( datafield_id ) WHERE df.name='Studieninfo' AND de.content LIKE '?'";
-                $values = array($study_info);
-                $this->cand_addressees = MultiMessModel::adressee_search($query, $values, $locked, $this->cand_addressees);
+            
+            // (5) check abschluss
+            if($cand_abs = Request::getArray('abschluss')) {
+                
+                $lookup = new UserLookup;
+                $lookup->setFilter('abschluss',$cand_abs);
+                $abs_users[] = $lookup->execute();
+
+                
+                if(count($abs_users)) {
+                    foreach($abs_users as $user) {
+                        $query = "SELECT * FROM auth_user_md5 aum WHERE user_id IN( ? )";
+                        $values = array($user);
+                        $this->cand_addressees = MultiMessModel::adressee_search($query, $values, $locked, $this->cv);
+                    }
+                
+                }
             }
+            
+            
+            //
+            // (6)... (we don't need this in the moment)
+            // if($study_info = Request::get('datafield')) {
+            //                 $study_info = sprintf('%%%s%%',implode('%',explode(' ',$study_info)));
+            //                 $query = "SELECT * FROM auth_user_md5 AS aum LEFT JOIN datafields_entries AS de ON ( aum.user_id = de.range_id )"
+            //                        . "LEFT JOIN datafields AS df USING ( datafield_id ) WHERE df.name='Studieninfo' AND de.content LIKE '?'";
+            //                 $values = array($study_info);
+            //                 $this->cand_addressees = MultiMessModel::adressee_search($query, $values, $locked, $this->cand_addressees);
+            //             }
 
             if(sizeof($this->cand_addressees) > 0) {
                 $this->flash['messages'] = array('success' => sprintf(_("Es wurden %s Nutzer gefunden"), sizeof($this->cand_addressees)));
