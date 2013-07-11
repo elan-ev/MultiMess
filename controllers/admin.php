@@ -88,7 +88,7 @@ class AdminController extends AuthenticatedController
                 $lookup->setFilter('fach',$cand_sg);
                 $sg_users[] = $lookup->execute();
               
-                if(is_array($sg_users) && !empty($sg_users[0])) {
+                if(count($sg_users['0'])) {
                     foreach($sg_users as $user) {
                         $query = "SELECT * FROM auth_user_md5 aum WHERE user_id IN( ? )";
                         $values = array($user);
@@ -105,7 +105,7 @@ class AdminController extends AuthenticatedController
                 $abs_users[] = $lookup->execute();
 
                 
-                if(count($abs_users)) {
+                if(count($abs_users['0'])) {                    
                     foreach($abs_users as $user) {
                         $query = "SELECT * FROM auth_user_md5 aum WHERE user_id IN( ? )";
                         $values = array($user);
