@@ -195,14 +195,13 @@ class AdminController extends AuthenticatedController
                     $addresser = "____%system%____";
                 }
 
-                //$bm = new MultiMessBulkMail();
-                $bm = new Messaging();
+                $bm = new MultiMessBulkMail();
 
                 $cand_addressees = $this->flash['cand_addressees'];
                 if(count($cand_addressees)) {
                     $bm->insert_message(addslashes($message), array_keys($cand_addressees), $addresser, time(), '', '','',$subject,TRUE);
                 }
-
+                $bm->bulkSend();
                 $this->flash['messages'] = array('success' => sprintf(_("Es wurde eine Nachricht an %s Empfänger geschickt."), sizeof($this->flash['cand_addressees'])));
                 $this->redirect(PluginEngine::getLink('multimess/admin/index'));
             }
