@@ -1,3 +1,15 @@
-.form_submit {
-    text-align:         center;
+.mmleft {
+    float:left;
+    width: 50%;
+}
+
+.mmright {
+    padding-top:5em;
+}
+
+.mmselect{
+    width:15%;
+}
+.mmform_submit {
+    text-align:  center;
 }

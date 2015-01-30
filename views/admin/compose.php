@@ -35,16 +35,7 @@
 
 
 <?
-$infobox_content = array(array(
-    'kategorie' => _('Hinweise:'),
-    'eintrag'   => array(array(
-        'icon' => 'icons/16/black/info.png',
-        'text' => _('Sie können hier eine Nachricht verfassen. Falls Sie die Empfänger überprüfen und bearbeiten wollen,'
-                 . ' klicken Sie auf die entsprechende Feldüberschrift. Einen alternativen Absender können Sie bei Bedarfs auch bestimmen.')
-    ))
-));
-$infobox = array('picture' => 'infobox/messages.jpg', 'content' => $infobox_content);
-
+Helpbar::get ()->addPlainText ('', _("Sie können hier eine Nachricht verfassen. Falls Sie die Empfänger überprüfen und bearbeiten wollen, klicken Sie auf die entsprechende Feldüberschrift. Einen alternativen Absender können Sie bei Bedarf auch bestimmen."));
 ?>
 
 <div id="dialog" title="<?=_('Empfängerliste')?>">
@@ -84,7 +75,7 @@ $infobox = array('picture' => 'infobox/messages.jpg', 'content' => $infobox_cont
         </div>
     </div>
 </div>
-<div class="form_submit">
+<div class="mmform_submit">
     <div class="button-group">
         <?= \Studip\Button::create(_('Absenden'), 'absenden') ?>
         <?= \Studip\LinkButton::createCancel(_('Abbrechen'), PluginEngine::getLink('multimess/admin/')) ?>
