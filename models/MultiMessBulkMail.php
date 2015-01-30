@@ -113,13 +113,6 @@ class MultiMessBulkMail extends Messaging
                                 ->setSenderName($data['reply_name']);
                        }
 
-                       /*
-                       $user_cfg = UserConfig::get($user_id);
-                       if ($user_cfg->getValue('MAIL_AS_HTML')) {
-                           $mail->setBodyHtml($data['html']);
-                       }
-                       */
-
                        if($GLOBALS["ENABLE_EMAIL_ATTACHMENTS"]){
                            foreach(get_message_attachments($data['message_id']) as $attachment){
                                $mail->addStudipAttachment($attachment['dokument_id']);

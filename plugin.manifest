@@ -1,6 +1,6 @@
 pluginname=MultiMess
 pluginclassname=MultiMess
 origin=elan-ev
-version=2.1
-studipMinVersion=2.0
+version=2.2
+studipMinVersion=3.1
 
