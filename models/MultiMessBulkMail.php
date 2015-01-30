@@ -52,7 +52,7 @@ class MultiMessBulkMail extends Messaging
 
                    if ($snd_user_id != "____%system%____") {
                        $snd_fullname = get_fullname($snd_user_id);
-                       $db4->query("SELECT Email FROM auth_user_md5 WHERE user_id = '$user->id'");
+                       $db4->query("SELECT Email FROM auth_user_md5 WHERE user_id = '$snd_user_id'");
                        $db4->next_record();
                        $reply_to = $db4->f("Email");
                    }
@@ -73,6 +73,7 @@ class MultiMessBulkMail extends Messaging
                        'html'       => $mailhtml,
                        'title'      => $title,
                        'reply_to'   => $reply_to,
+                       'reply_name' => $snd_fullname,
                        'message_id' => $message_id,
                        'users'      => array()
                    );
@@ -96,32 +97,36 @@ class MultiMessBulkMail extends Messaging
            // send a mail, for each language one
            foreach ($this->bulk_mail as $lang_data) {
                foreach ($lang_data as $data) {
-                   $mail = new StudipMail();
-                   $mail->setSubject($data['title']);
+                   foreach (array_chunk($data['users'], 100) as $users) {
+                       $mail = new StudipMail();
+                       $mail->setSubject($data['title']);
 
-                   foreach ($data['users'] as $user_id => $to) {
-                       $mail->addRecipient($to, get_fullname($user_id), 'Bcc');
-                   }
-
-                   $mail->setReplyToEmail('')
-                   ->setBodyText($data['text']);
-
-                   if (strlen($data['reply_to'])) {
-                       $mail->setSenderEmail($data['reply_to'])
-                            ->setSenderName($snd_fullname);
-                   }
-
-                   $user_cfg = UserConfig::get($user_id);
-                   if ($user_cfg->getValue('MAIL_AS_HTML')) {
-                       $mail->setBodyHtml($mailhtml);
-                   }
-
-                   if($GLOBALS["ENABLE_EMAIL_ATTACHMENTS"]){
-                       foreach(get_message_attachments($data['message_id']) as $attachment){
-                           $mail->addStudipAttachment($attachment['dokument_id']);
+                       foreach ($users as $user_id => $to) {
+                           $mail->addRecipient($to, '', 'Bcc');
                        }
+
+                       $mail->setReplyToEmail('')
+                       ->setBodyText($data['text']);
+
+                       if (strlen($data['reply_to'])) {
+                           $mail->setSenderEmail($data['reply_to'])
+                                ->setSenderName($data['reply_name']);
+                       }
+
+                       /*
+                       $user_cfg = UserConfig::get($user_id);
+                       if ($user_cfg->getValue('MAIL_AS_HTML')) {
+                           $mail->setBodyHtml($data['html']);
+                       }
+                       */
+
+                       if($GLOBALS["ENABLE_EMAIL_ATTACHMENTS"]){
+                           foreach(get_message_attachments($data['message_id']) as $attachment){
+                               $mail->addStudipAttachment($attachment['dokument_id']);
+                           }
+                       }
+                       $mail->send();
                    }
-                   $mail->send();
                }
            }
        }
